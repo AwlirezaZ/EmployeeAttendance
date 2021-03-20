@@ -1,0 +1,127 @@
+﻿@model EmployeeAttendance.Models.AttendanceRecordViewModel
+
+@{
+    ViewBag.Title = "AddAttendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script>
+
+   
+
+    $("document").ready(function ()
+    {
+      
+        $("#dateNow-button").click(function () {
+            let today = new Date().toISOString().slice(0, 10);
+            $("#dateNow-input").val(today);
+        })
+        $("#timeNow-btn").click(function () {
+            let now = new Date().toTimeString().split(" ")[0];
+            $("#timeNow-input").val(now);
+        })
+    })
+</script>
+<style>
+    body {
+  margin: 0;
+  padding: 0;
+  background-color: #17a2b8;
+  height: 100vh;
+
+}
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 600px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+.form-group{
+    max-width:none
+}
+.display-inline{
+    display:inline
+}
+    body{
+        direction:rtl
+    }
+    .btn-height{
+        height:30px;
+        width:100px;
+    }
+    .rtl-direction{
+        direction:rtl
+    }
+    .text-align-right{
+        text-align:right
+    }
+    .width{
+        width:1000px;
+    }
+    input,select{
+        max-width:600px;
+    }
+</style>
+
+<div id="login">
+    <h2 class="text-center text-white pt-5">AddAttendance</h2>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                  @{ 
+                      string dot = ".";
+                  }
+                    <form action="" method="post" class="form" id="login-form">
+
+                        <div class="form-horizontal rtl-direction">
+                            <div class="form-group rtl-direction text-align-right">
+                                <label class="rtl-direction">یک کارمند را انتخاب کنید</label>
+                                <select name="fullNameAndId" class="form-control">
+                                    @foreach (var employee in Model.Employees)
+                                    {
+                                        <option>@Html.DisplayFor(model => employee.EmployeeId)@dot@Html.DisplayFor(model => employee.FirstName) @Html.DisplayFor(model => employee.LastName)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group rtl-direction">
+                                <input id="dateNow-input" class="form-control" type="date" name="date" />
+                                <button id="dateNow-button" type="button" class="btn-dark btn-height align-self-center">تاریخ امروز</button>
+                            </div>
+                            <div class="form-group rtl-direction">
+                                <input id="timeNow-input" class="form-control" type="time" step="1" name="time" />
+                                <button id="timeNow-btn" type="button" class="btn-dark btn-height">ساعت الان</button>
+                            </div>
+                            <div class="form-group rtl-direction">
+                                <div>
+                                    <select name="attendanceType" class="form-control">
+                                        <option>ورود</option>
+                                        <option>خروج</option>
+                                    </select>
+                                </div>
+                                <div class="text-align-right">
+                                    <label>توضیحات:</label>
+                                    <input name="description" type="text" class="form-control" />
+                                </div>
+                                <br />
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="افزودن" class="btn btn-default btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+     @Html.ActionLink("بازشگت به صفحه اصلی", "Index")
+</div>

@@ -1,0 +1,83 @@
+﻿@model List<EmployeeAttendance.Models.AttendanceRecordViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+
+
+
+    h3 {
+        display: inline
+    }
+
+    body, header, footer {
+        direction: rtl;
+        background-color: lightblue
+    }
+
+    table {
+        direction: rtl
+    }
+
+    .rotate-transform {
+        transform: rotate(90deg)
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script>
+
+</script>
+<h2>گزارش حضور غیاب کارمندان</h2>
+<form action="@Url.Action("FilterAttendances","EmployeeAttendance")" method="get">
+    <div class="form-group d-inline">
+        <label>انتخاب کارمند:</label>
+       <select>
+           @{ 
+               string dot = ".";
+           }
+           <option selected="selected">همه‌ی کارمندان</option>
+           @foreach (var employee in Model)
+           {
+           <option>@Html.DisplayFor(model => employee.EmployeeId)@dot@Html.DisplayFor(model => employee.FullName)</option>
+           }
+       </select>
+    </div>
+    <div class="form-group">
+        <label>:از تاریخ</label>
+        <input type="date" name="fromDate" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label>:تا تاریخ</label>
+        <input type="date" name="toDate" class="form-control"/>
+    </div>
+</form>
+<h3>@Html.ActionLink("افزودن کارمند", "AddEmployee", null, new { @class = "btn btn-danger btn-lg" })</h3>
+<h3>@Html.ActionLink("ثبت حضور/غیاب", "AddAttendance", null, new { @class = "btn btn-danger btn-lg" })</h3>
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th>تاریخ</th>
+            <th>نام و نام خانوادگی</th>
+            <th>نوع حضور</th>
+            <th>ساعت</th>
+            <th>توضیحات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var viewModel in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => viewModel.Date)</td>
+                <td>@Html.ActionLink(viewModel.FullName,"ShowSpecificEmployee",new { id = viewModel.EmployeeId })</td>
+                @*<td>@Html.DisplayFor(model => viewModel.FullName)</td>*@
+                <td>@Html.DisplayFor(model => viewModel.AttendanceType)</td>
+                <td>@Html.DisplayFor(model => viewModel.Time)</td>
+                <td>@Html.DisplayFor(model => viewModel.Note)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

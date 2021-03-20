@@ -1,0 +1,56 @@
+﻿@model List<EmployeeAttendance.Models.AttendanceRecordViewModel>
+@{
+    ViewBag.Title = "ShowSpecificEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h2 {
+        text-align: center
+    }
+
+    h3 {
+        display: inline
+    }
+
+    body, header, footer {
+        direction: rtl;
+        background-color: lightblue
+    }
+
+    table {
+        direction: rtl
+    }
+
+    .rotate-transform {
+        transform: rotate(90deg)
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script>
+</script>
+<h2>گزارش حضور غیاب <i><b>@ViewBag.fullName</b></i></h2>
+<h3>@Html.ActionLink("لیست کل گزارش‌ها", "Index", "EmployeeAttendance", null, new { @class = "btn btn-danger btn-lg" })</h3>
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th>تاریخ</th>
+            <th>نوع حضور</th>
+            <th>ساعت</th>
+            <th>توضیحات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var viewModel in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => viewModel.Date)</td>
+                <td>@Html.DisplayFor(model => viewModel.AttendanceType)</td>
+                <td>@Html.DisplayFor(model => viewModel.Time)</td>
+                <td>@Html.DisplayFor(model => viewModel.Note)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
