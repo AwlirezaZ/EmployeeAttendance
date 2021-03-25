@@ -77,7 +77,7 @@ namespace EmployeeAttendance.Controllers
         }
         public ActionResult FilterAttendances(string nameAndId,DateTime? fromDate,DateTime? toDate)
         {
-            //bool allEmployee = true;
+            bool allEmployee = true;
             ////checking name for null
             //if (nameAndId[1] == '.') allEmployee = false;
             //if (fromDate != null)
