@@ -83,10 +83,12 @@ namespace EmployeeAttendance.Controllers
             string[] list = nameAndId.Split('.');
             attendances = db.Attendances.Where(x => x.EmployeeId == int.Parse(list[0])).ToList();
             }
-            if(fromDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime > fromDate).ToList();
-            else if (fromDate != null) attendances = db.Attendances.Where(x => x.DateTime > fromDate).ToList();
-            if (toDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime < toDate).ToList();
+            if (fromDate != null && nameAndId[1] == '.' && toDate != null) attendances = attendances.Where(x => x.DateTime > fromDate).Where(x => x.DateTime < toDate).ToList();
+            else if (fromDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime > fromDate).ToList();
+            else if (toDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime < toDate).ToList();
+            else if (toDate != null && fromDate != null) attendances = db.Attendances.Where(x => x.DateTime < toDate).Where(x => x.DateTime > fromDate).ToList();
             else if (toDate != null) attendances = db.Attendances.Where(x => x.DateTime < toDate).ToList();
+            else if (fromDate != null) attendances = db.Attendances.Where(x => x.DateTime > fromDate).ToList();
             foreach (var item in attendances)
             {
                 
