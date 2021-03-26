@@ -77,11 +77,23 @@ namespace EmployeeAttendance.Controllers
         }
         public ActionResult FilterAttendances(string nameAndId,DateTime? fromDate,DateTime? toDate)
         {
-            bool allEmployee = true;
-            ////checking name for null
-            //if (nameAndId[1] == '.') allEmployee = false;
-            //if (fromDate != null)
-            return View();
+            List<Attendance> attendances = new List<Attendance>();
+            if (nameAndId[1] == '.')
+            {
+            string[] list = nameAndId.Split('.');
+            attendances = db.Attendances.Where(x => x.EmployeeId == int.Parse(list[0])).ToList();
+            }
+            if(fromDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime > fromDate).ToList();
+            else if (fromDate != null) attendances = db.Attendances.Where(x => x.DateTime > fromDate).ToList();
+            if (toDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime < toDate).ToList();
+            else if (toDate != null) attendances = db.Attendances.Where(x => x.DateTime < toDate).ToList();
+            foreach (var item in attendances)
+            {
+                
+            }
+            var model = AttendanceMapper.Map(attendances);
+
+            return View(model);
         }
     }
 }

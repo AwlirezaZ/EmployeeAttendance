@@ -34,7 +34,7 @@
 <form action="@Url.Action("FilterAttendances","EmployeeAttendance")" method="get">
     <div class="form-group d-inline">
         <label>انتخاب کارمند:</label>
-       <select>
+       <select name="nameAndId">
            @{ 
                string dot = ".";
            }
@@ -52,6 +52,9 @@
     <div class="form-group">
         <label>:تا تاریخ</label>
         <input type="date" name="toDate" class="form-control"/>
+    </div>
+    <div>
+        <input type="submit" value="فیلتر کردن" />
     </div>
 </form>
 <h3>@Html.ActionLink("افزودن کارمند", "AddEmployee", null, new { @class = "btn btn-danger btn-lg" })</h3>
