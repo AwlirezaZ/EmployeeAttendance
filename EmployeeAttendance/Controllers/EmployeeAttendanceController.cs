@@ -78,24 +78,40 @@ namespace EmployeeAttendance.Controllers
         public ActionResult FilterAttendances(string nameAndId,DateTime? fromDate,DateTime? toDate)
         {
             List<Attendance> attendances = new List<Attendance>();
+            int id = 0;
             if (nameAndId[1] == '.')
             {
             string[] list = nameAndId.Split('.');
-            attendances = db.Attendances.Where(x => x.EmployeeId == int.Parse(list[0])).ToList();
+                id = int.Parse(list[0]);
             }
-            if (fromDate != null && nameAndId[1] == '.' && toDate != null) attendances = attendances.Where(x => x.DateTime > fromDate).Where(x => x.DateTime < toDate).ToList();
+            if (fromDate != null && nameAndId[1] == '.' && toDate != null)
+                attendances = 
+                    db.Attendances.Where(x => x.DateTime > fromDate)
+                    .Where(x => x.DateTime < toDate)
+                    .Where(x => x.EmployeeId == id)
+                    .Include(x => x.Employee).ToList();
             else if (fromDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime > fromDate).ToList();
-            else if (toDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime < toDate).ToList();
-            else if (toDate != null && fromDate != null) attendances = db.Attendances.Where(x => x.DateTime < toDate).Where(x => x.DateTime > fromDate).ToList();
-            else if (toDate != null) attendances = db.Attendances.Where(x => x.DateTime < toDate).ToList();
-            else if (fromDate != null) attendances = db.Attendances.Where(x => x.DateTime > fromDate).ToList();
-            foreach (var item in attendances)
-            {
-                
-            }
+            else if (toDate != null && nameAndId[1] == '.')
+                attendances = 
+                    db.Attendances.Where(x => x.DateTime < toDate)
+                    .Where(x => x.EmployeeId == id)
+                    .Include(x => x.Employee).ToList();
+            else if (toDate != null && fromDate != null)
+                attendances = 
+                    db.Attendances.Where(x => x.DateTime < toDate)
+                    .Where(x => x.DateTime > fromDate)
+                    .Include(x => x.Employee).ToList();
+            else if (toDate != null)
+                attendances = 
+                    db.Attendances.Where(x => x.DateTime < toDate)
+                    .Include(x => x.Employee).ToList();
+            else if (fromDate != null)
+                attendances = 
+                    db.Attendances.Where(x => x.DateTime > fromDate)
+                    .Include(x => x.Employee).ToList();
             var model = AttendanceMapper.Map(attendances);
 
-            return View(model);
+            return View("~/Views/EmployeeAttendance/Index.cshtml",model);
         }
     }
 }
