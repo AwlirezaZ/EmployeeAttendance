@@ -81,37 +81,37 @@ namespace EmployeeAttendance.Controllers
             int id = 0;
             if (nameAndId[1] == '.')
             {
-            string[] list = nameAndId.Split('.');
+                string[] list = nameAndId.Split('.');
                 id = int.Parse(list[0]);
             }
             if (fromDate != null && nameAndId[1] == '.' && toDate != null)
-                attendances = 
+                attendances =
                     db.Attendances.Where(x => x.DateTime > fromDate)
                     .Where(x => x.DateTime < toDate)
                     .Where(x => x.EmployeeId == id)
                     .Include(x => x.Employee).ToList();
             else if (fromDate != null && nameAndId[1] == '.') attendances = attendances.Where(x => x.DateTime > fromDate).ToList();
             else if (toDate != null && nameAndId[1] == '.')
-                attendances = 
+                attendances =
                     db.Attendances.Where(x => x.DateTime < toDate)
                     .Where(x => x.EmployeeId == id)
                     .Include(x => x.Employee).ToList();
             else if (toDate != null && fromDate != null)
-                attendances = 
+                attendances =
                     db.Attendances.Where(x => x.DateTime < toDate)
                     .Where(x => x.DateTime > fromDate)
                     .Include(x => x.Employee).ToList();
             else if (toDate != null)
-                attendances = 
+                attendances =
                     db.Attendances.Where(x => x.DateTime < toDate)
                     .Include(x => x.Employee).ToList();
             else if (fromDate != null)
-                attendances = 
+                attendances =
                     db.Attendances.Where(x => x.DateTime > fromDate)
                     .Include(x => x.Employee).ToList();
             var model = AttendanceMapper.Map(attendances);
 
-            return View("~/Views/EmployeeAttendance/Index.cshtml",model);
+            return View(model);
         }
     }
 }

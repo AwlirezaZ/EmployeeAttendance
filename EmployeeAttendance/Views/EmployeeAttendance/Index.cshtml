@@ -34,24 +34,24 @@
 <form action="@Url.Action("FilterAttendances","EmployeeAttendance")" method="get">
     <div class="form-group d-inline">
         <label>انتخاب کارمند:</label>
-       <select name="nameAndId">
-           @{ 
-               string dot = ".";
-           }
-           <option selected="selected">همه‌ی کارمندان</option>
-           @foreach (var employee in Model)
-           {
-           <option>@Html.DisplayFor(model => employee.EmployeeId)@dot@Html.DisplayFor(model => employee.FullName)</option>
-           }
-       </select>
+        <select name="nameAndId">
+            @{
+                string dot = ".";
+            }
+            <option selected="selected">همه‌ی کارمندان</option>
+            @foreach (var employee in Model)
+            {
+                <option id="@employee.EmployeeId">@Html.DisplayFor(model => employee.EmployeeId)@dot@Html.DisplayFor(model => employee.FullName)</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label>:از تاریخ</label>
-        <input type="date" name="fromDate" class="form-control"/>
+        <input type="date" name="fromDate" class="form-control" />
     </div>
     <div class="form-group">
         <label>:تا تاریخ</label>
-        <input type="date" name="toDate" class="form-control"/>
+        <input type="date" name="toDate" class="form-control" />
     </div>
     <div>
         <input type="submit" value="فیلتر کردن" />
@@ -74,7 +74,7 @@
         {
             <tr>
                 <td>@Html.DisplayFor(model => viewModel.Date)</td>
-                <td>@Html.ActionLink(viewModel.FullName,"ShowSpecificEmployee",new { id = viewModel.EmployeeId })</td>
+                <td>@Html.ActionLink(viewModel.FullName, "ShowSpecificEmployee", new { id = viewModel.EmployeeId })</td>
                 @*<td>@Html.DisplayFor(model => viewModel.FullName)</td>*@
                 <td>@Html.DisplayFor(model => viewModel.AttendanceType)</td>
                 <td>@Html.DisplayFor(model => viewModel.Time)</td>

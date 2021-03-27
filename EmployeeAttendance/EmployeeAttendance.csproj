@@ -290,6 +290,7 @@
     <Content Include="Views\EmployeeAttendance\AddEmployee.cshtml" />
     <Content Include="Views\EmployeeAttendance\AddAttendance.cshtml" />
     <Content Include="Views\EmployeeAttendance\ShowSpecificEmployee.cshtml" />
+    <Content Include="Views\EmployeeAttendance\FilterAttendances.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
